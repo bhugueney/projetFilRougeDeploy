@@ -1,0 +1,12 @@
+FROM alpine:edge
+MAINTAINER baeldung.com
+RUN apk add --no-cache openjdk8
+COPY oracleJCE/UnlimitedJCEPolicyJDK8/* /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/
+RUN apk --no-cache add netcat-openbsd
+COPY fil-rouge-front-java-app /opt/filrougeFront
+copy startFrontServer.sh /opt/filrougeFront/
+VOLUME /var/lib/filrougeFront
+EXPOSE 4200
+RUN chmod 755 /opt/filrougeFront/startFrontServer.sh
+RUN ls -la /opt/filrougeFront
+ENTRYPOINT ["/opt/filrougeFront/startFrontServer.sh"]

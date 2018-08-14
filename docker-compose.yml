@@ -1,0 +1,66 @@
+version: '2'
+services:
+    filrouge-server-database-postgresql:
+        container_name: filrouge-server-database-postgresql
+        image: postgres:10.1
+        build:
+            context: .
+            dockerfile: database/Dockerfile.postgresdb
+        volumes:
+            - /var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=app
+            - POSTGRES_PASSWORD=filRouge
+            - POSTGRES_DB=filrouge
+        expose:
+            - 5432
+        ports:
+            - 5433:5432
+        networks:
+            - filrouge-servers-private-networks
+  
+    filrouge-server-backend:
+        container_name: filrouge-server-backend
+        image: alpine:edge1
+        build:
+            context: ./backendServer
+            dockerfile: Dockerfile.alpine-java-backend
+        volumes:
+            - /var/lib/filrougebackend
+        
+        expose:
+            - 8095
+        ports:
+            - 8095:8095
+        networks:
+            - filrouge-servers-private-networks       
+        links:
+            - filrouge-server-database-postgresql:filrouge-server-database-postgresql        
+        depends_on:
+            - filrouge-server-database-postgresql
+            
+    filrouge-server-front:
+        container_name: filrouge-server-front
+        image: alpine:edge2
+        build:
+            context: ./FrontServer
+            dockerfile: Dockerfile.alpine-java-front
+        volumes:
+            - /var/lib/filrougeFront
+        
+        expose:
+            - 4200
+        ports:
+            - 4200:4200
+        networks:
+            - filrouge-servers-private-networks       
+        links:
+            - filrouge-server-backend:filrouge-server-backend        
+        depends_on:
+            - filrouge-server-backend
+            
+
+networks:
+    filrouge-servers-private-networks:
+        driver: bridge
+            

@@ -1,0 +1,12 @@
+FROM alpine:edge
+MAINTAINER baeldung.com
+RUN apk add --no-cache openjdk8
+COPY oracleJCE/UnlimitedJCEPolicyJDK8/* /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/
+RUN apk --no-cache add netcat-openbsd
+COPY fil-rouge-backend-java-app /opt/filrougebackend
+copy startBackEndServer.sh /opt/filrougebackend/
+VOLUME /var/lib/filrougebackend
+EXPOSE 8095
+RUN chmod 755 /opt/filrougebackend/startBackEndServer.sh
+RUN ls -la /opt/filrougebackend
+ENTRYPOINT ["/opt/filrougebackend/startBackEndServer.sh"]
