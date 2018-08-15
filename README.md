@@ -17,7 +17,7 @@ To run the test follow these steps :
   * backend server port : 8095
   * front server port : 4200
   
-(These ports can be changed in application.properties, startBackEndServer.sh, Dockerfile.alpine-java-backend, startFrontServer.sh, Dockerfile.alpine-java-front, docker-compose.yml files)
+	(These ports can be changed in application.properties, startBackEndServer.sh, Dockerfile.alpine-java-backend, startFrontServer.sh, Dockerfile.alpine-java-front, docker-compose.yml files)
 
 3. with Git, clone the repository to your computer
 
@@ -27,7 +27,7 @@ To run the test follow these steps :
     
 5. when the servers are running, with your favorite browser (fully tested on chrome), go to url : localhost:4200
 
-6. For testing Guide follow 
+6. For testing follow [ManuelUtilisateur.pdf](ManuelUtilisateur.pdf)
 
 
 ## Further help
